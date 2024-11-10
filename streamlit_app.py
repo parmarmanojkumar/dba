@@ -129,8 +129,8 @@ policy_violations_data = pd.DataFrame({
     'Policy Violation - Flag': np.random.randint(20, 80, 6)
 })
 fig_policy = go.Figure()
-fig_policy.add_trace(go.Bar(x=policy_violations_data['Action'], y=policy_violations_data['Policy'], name='Policy Violation - Action', orientation='h'))
-fig_policy.add_trace(go.Bar(x=policy_violations_data['Anomaly'], y=policy_violations_data['Policy'], name='Policy Violation - Flag', orientation='h'))
+fig_policy.add_trace(go.Bar(x=policy_violations_data['Policy Violation - Action'], y=policy_violations_data['Policy'], name='Policy Violation - Action', orientation='h'))
+fig_policy.add_trace(go.Bar(x=policy_violations_data['Policy Violation - Flag'], y=policy_violations_data['Policy'], name='Policy Violation - Flag', orientation='h'))
 fig_policy.update_layout(barmode='stack')
 st.plotly_chart(fig_policy, use_container_width=True)
 
@@ -140,8 +140,8 @@ st.plotly_chart(fig_policy, use_container_width=True)
 st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
 st.markdown('<div class="subheader">Geographic Spread of Agents</div>', unsafe_allow_html=True)
 map_data = pd.DataFrame({
-    'lat': np.random.uniform(-90, 90, 10),
-    'lon': np.random.uniform(-180, 180, 10),
+    'lat': np.random.uniform(-90, 90, 25),
+    'lon': np.random.uniform(-180, 180, 25),
 })
 fig_map = px.scatter_geo(map_data, lat='lat', lon='lon', scope='world')
 st.plotly_chart(fig_map, use_container_width=True)
