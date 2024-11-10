@@ -4,6 +4,15 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 
+# Dummy Data
+# Dummy Data
+total_agents = 3
+total_queries = 2450
+queries_flagged = 15
+compliance_score = 98
+total_agents_fw= 4
+most_used_fw="CrewAI"
+
 # Custom CSS styling for dark mode compatibility and improved layout
 st.markdown("""
     <style>
@@ -49,19 +58,21 @@ st.sidebar.selectbox("Agent", ["All", "Agent 1", "Agent 2"])
 st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
 st.markdown('<div class="subheader">Key Metrics</div>', unsafe_allow_html=True)
 col1, col2, col3, col4 = st.columns(4)
-col1.markdown('<div class="kpi"><h3>Total Agents</h3><p>3 (+200%)</p></div>', unsafe_allow_html=True)
-col2.markdown('<div class="kpi"><h3>Total Queries</h3><p>2.45K (+53.1%)</p></div>', unsafe_allow_html=True)
-col3.markdown('<div class="kpi"><h3>Total Queries Flagged</h3><p>15% (-59%)</p></div>', unsafe_allow_html=True)
-col4.markdown('<div class="kpi"><h3>Compliance Score</h3><p>98% (+19%)</p></div>', unsafe_allow_html=True)
+col1, col2, col3, col4 = st.columns(4)
+col1.metric("Total Agents", total_agents, "+200%")
+col2.metric("Total Queries", f"{total_queries / 1000:.2f}K", "+53.1%")
+col3.metric("Total Queries Flagged", f"{queries_flagged}%", "-59%")
+col4.metric("Compliance Score", f"{compliance_score}%", "+19%")
 
 # Additional Information Row (Dark Mode Friendly)
 st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
 st.markdown('<div class="subheader">Additional Information</div>', unsafe_allow_html=True)
-col1, col2, col3, col4 = st.columns(4)
-col1.markdown('<div class="info-block"><strong>No. of Agent Framework</strong><p>4</p></div>', unsafe_allow_html=True)
-col2.markdown('<div class="info-block"><strong>Most Used Framework</strong><p>CrewAI</p></div>', unsafe_allow_html=True)
-col3.markdown('<div class="info-block"><strong>At Risk Agent</strong><p>Sales</p></div>', unsafe_allow_html=True)
-col4.markdown('<div class="info-block"><strong>At Risk Issue</strong><p>LLM06: SID</p></div>', unsafe_allow_html=True)
+col1, col2, col3, col4, col5 = st.columns(5)
+col1.metric("No. of Agent Framework", total_agents_fw, "+100%")
+col2.metric("Most Used Agent Framework", most_used_fw, "-Langchain")
+col3.metric("Risky Agent", "Sales", "-Chat")
+col4.metric("CMost violated Policy", "PII", "-Prompt Injection")
+col5.metric("OWASP TOP10", "SID", "-PI")
 
 # Divider
 st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
