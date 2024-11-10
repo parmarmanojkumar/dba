@@ -71,7 +71,7 @@ col1, col2, col3, col4, col5 = st.columns(5)
 col1.metric("No. of Agent Framework", total_agents_fw, "+100%")
 col2.metric("Most Used Agent Framework", most_used_fw, "-Langchain")
 col3.metric("Risky Agent", "Sales", "-Chat")
-col4.metric("CMost violated Policy", "PII", "-Prompt Injection")
+col4.metric("Most violated Policy", "PII", "-Prompt Injection")
 col5.metric("OWASP TOP10", "SID", "-PI")
 
 # Divider
@@ -80,7 +80,7 @@ st.markdown('<div class="divider"></div>', unsafe_allow_html=True)
 # Guardian Overview Section (Donut Chart Only)
 st.markdown('<div class="subheader">Guardian Overview</div>', unsafe_allow_html=True)
 st.subheader("Guardrail Overview")
-fig_donut = go.Figure(data=[go.Pie(labels=['Total Query', 'Action', 'Anomalous'], values=[2090, 160, 200], hole=.4)])
+fig_donut = go.Figure(data=[go.Pie(labels=['Total Query', 'Policy Violation - Action', 'Policy Violation - Flag'], values=[2090, 160, 200], hole=.4)])
 fig_donut.update_layout(showlegend=False)
 st.plotly_chart(fig_donut, use_container_width=True)
 
@@ -108,8 +108,8 @@ with col2:
     st.subheader("Guardrail Activity")
     guardrail_data = pd.DataFrame({
         'Date': pd.date_range(start='2022-10-10', periods=6, freq='D').strftime('%d %b'),
-        'Action': np.random.randint(30, 90, 6),
-        'Anomaly': np.random.randint(10, 40, 6)
+        'Policy Violation - Action': np.random.randint(30, 90, 6),
+        'Policy Violation - Flag': np.random.randint(10, 40, 6)
     })
     guardrail_data.set_index('Date', inplace=True)
     st.bar_chart(guardrail_data)
@@ -125,12 +125,12 @@ st.markdown('<div class="subheader">Policy Violations & OWASP Top 10</div>', uns
 st.subheader("Policy Violations")
 policy_violations_data = pd.DataFrame({
     'Policy': ['PII', 'Ban Topic', 'Prompt Injection', 'NSFW', 'Bias', 'Malicious URL'],
-    'Action': np.random.randint(30, 100, 6),
-    'Anomaly': np.random.randint(20, 80, 6)
+    'Policy Violation - Action': np.random.randint(30, 100, 6),
+    'Policy Violation - Flag': np.random.randint(20, 80, 6)
 })
 fig_policy = go.Figure()
-fig_policy.add_trace(go.Bar(x=policy_violations_data['Action'], y=policy_violations_data['Policy'], name='Action', orientation='h'))
-fig_policy.add_trace(go.Bar(x=policy_violations_data['Anomaly'], y=policy_violations_data['Policy'], name='Anomaly', orientation='h'))
+fig_policy.add_trace(go.Bar(x=policy_violations_data['Action'], y=policy_violations_data['Policy'], name='Policy Violation - Action', orientation='h'))
+fig_policy.add_trace(go.Bar(x=policy_violations_data['Anomaly'], y=policy_violations_data['Policy'], name='Policy Violation - Flag', orientation='h'))
 fig_policy.update_layout(barmode='stack')
 st.plotly_chart(fig_policy, use_container_width=True)
 
